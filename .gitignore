@@ -1,0 +1,37 @@
+# Environment & Secrets
+.env
+*.env.local
+
+# Python & Dependencies
+__pycache__/
+*.pyc
+*.pyo
+.Python
+env/
+venv/
+.venv/
+miniconda3/
+
+# Jupyter / Notebooks
+.ipynb_checkpoints/
+
+# Data & Database (Dilarang masuk ke Git)
+# File PDF mentah dan hasil pemrosesan
+data/raw_papers/*.pdf
+data/processed/
+data/chunks/
+
+# Volume Docker untuk Database Lokal
+data/qdrant_storage/
+data/langfuse_pg/
+*.faiss
+*.index
+
+# Logs & Cache
+*.log
+.embedding_cache/
+.pytest_cache/
+
+# OS / Sistem
+.DS_Store
+Thumbs.db
