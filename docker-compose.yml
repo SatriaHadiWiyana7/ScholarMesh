@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: scholarmesh-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - ./data/qdrant_storage:/qdrant/storage
+    restart: unless-stopped
+
+  langfuse:
+    image: langfuse/langfuse:latest
+    container_name: scholarmesh-langfuse
+    depends_on:
+      - langfuse-db
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://langfuse:langfuse@langfuse-db:5432/langfuse
+      - NEXTAUTH_SECRET=changeme_generate_random_string
+      - SALT=changeme_generate_random_string
+      - NEXTAUTH_URL=http://localhost:3000
+    restart: unless-stopped
+
+  langfuse-db:
+    image: postgres:15
+    container_name: scholarmesh-langfuse-db
+    environment:
+      - POSTGRES_USER=langfuse
+      - POSTGRES_PASSWORD=langfuse
+      - POSTGRES_DB=langfuse
+    volumes:
+      - ./data/langfuse_pg:/var/lib/postgresql/data
+    restart: unless-stopped
